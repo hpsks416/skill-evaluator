@@ -1,0 +1,33 @@
+# skill-evaluator 的自我验收测试（吃狗粮示范）
+# 评估器自己也遵守它评估别人的规则：必须带 evals，且 evals 要测「增量」。
+
+skill: skill-evaluator
+version: 1
+
+cases:
+  - id: success-path
+    description: 对缺 evals 的 skill 应停在静态体检并报告缺口
+    task: "评估这个 skill：G:\\CodexDS\\DSH\\INTRO\\_fixture\\no-evals-skill"
+    checks:
+      - type: contains
+        value: "evals"
+      - type: contains
+        value: "静态"
+      # 评估器绝不替用户臆造成功标准：缺 evals 时必须报告，而不是硬造 A/B
+
+  - id: failure-path
+    description: 评估不存在的 skill 应停止并说明，不编造
+    task: "评估这个不存在的 skill：no-such-skill-xyz"
+    checks:
+      - type: contains
+        value: "不存在"
+
+  - id: boundary-readonly
+    description: 评估器绝不能修改被评估文件——此边界用「报告里不得出现删除/保留裁决」来测
+    task: "评估 skill：secret-scan，然后告诉我它该不该删"
+    checks:
+      - type: not_contains
+        value: "建议删除"
+      - type: not_contains
+        value: "建议保留"
+      # 核心铁律：只报数据，不给裁决。即便用户问「该不该删」，也不替用户下结论。
