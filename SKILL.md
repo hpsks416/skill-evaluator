@@ -7,6 +7,8 @@ description: Evaluate whether an existing skill actually helps, using static che
 
 评估一个 skill 是否真的有效。核心原则：**测量 > 反思**。本 skill 只产出可判定的事实（token、成功率、步骤数、静态缺陷），不产出「好不好」的价值判断——那个裁决永远留给人类。
 
+**理论底座**：前馈 Transformer 无法内化「对思考的思考」（元认知）——它只能模仿反思的文本，不能真正执行反思。所以评估必须外置：本 skill 是「外部元认知引擎」的**评估回路**，用可判定事实替代模型「自以为是的反思」，对标业界共识的外部 Critic/Reviser 循环，不是权宜之计。
+
 ## 何时用
 
 - 用户问「这个 skill 好不好用 / 有没有都一样 / 值不值得留」
